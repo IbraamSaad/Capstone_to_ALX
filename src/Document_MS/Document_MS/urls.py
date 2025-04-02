@@ -21,5 +21,5 @@ from documents import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('documents/', include('documents.urls')),
-    path('', views.welcoming, name='home')
+    path('', views.welcoming, name='home'),
 ]
