@@ -1,0 +1,14 @@
+{% extends "Logout.html" %}  {# Or your base template #}
+
+{% block content %}
+  <h1>Logout Confirmation</h1>
+
+  <p>Are you sure you want to log out?</p>
+
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Log Out</button>
+  </form>
+
+  <p><a href="{% url 'home' %}">Cancel</a></p> {# Or your homepage url #}
+{% endblock %}

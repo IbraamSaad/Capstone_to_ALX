@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Documents List</title>
+</head>
+<body>
+    <h1>Documents List</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Project</th>
+                <th>Document Extension</th>
+                <th>Document Type</th>
+                <th>Metadata</th>
+                <th>Discipline</th>
+                <th>Revision</th>
+                <th>Description</th>
+                <th>Issue Date</th>
+                <th>Received Date</th>
+                <th>Submission Action</th>
+                <th>Issuer</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for document in documents_list %}
+            <tr>
+                <td>{{ document.project.project_name }}</td>
+                <td><a href="{{ document.document_extension.url }}">{{ document.document_extension.name }}</a></td>
+                <td>{{ document.get_documents_type_display }}</td>
+                <td>{{ document.documents_metaData }}</td>
+                <td>{{ document.get_document_discpline_or_trade_display }}</td>
+                <td>{{ document.revision }}</td>
+                <td>{{ document.document_description }}</td>
+                <td>{{ document.issue_date }}</td>
+                <td>{{ document.recived_date }}</td>
+                <td>{{ document.get_submition_display }}</td>
+                <td>{{ document.issuer }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="11">No documents found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
