@@ -1,4 +1,6 @@
 from django.shortcuts import render
-from . models import Projects, Documents
+from . models import ProjectName, Documents
+from django.http import HttpResponse
 
-class Project_View()
+def welcoming(request):
+    return render(request, 'documents/welcome.html')
