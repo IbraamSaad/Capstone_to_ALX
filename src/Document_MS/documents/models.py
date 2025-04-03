@@ -7,6 +7,7 @@ class CustomUser(AbstractUser):
         return self.username
 
 class ProjectName(models.Model):
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='assigned_project', null=True, blank=True)
     project_name = models.CharField(max_length=200, blank=False, unique=True)
     Project_Description = models.TextField(blank=True, unique=False)
     project_code = models.IntegerField(blank=False, unique=True)

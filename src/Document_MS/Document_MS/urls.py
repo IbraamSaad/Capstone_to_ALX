@@ -22,4 +22,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('documents/', include('documents.urls')),
     path('', views.welcoming, name='home'),
-]
+]   
