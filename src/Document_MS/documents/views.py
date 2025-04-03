@@ -84,7 +84,7 @@ class CustomeUserRetrieveUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
         instance = self.get_object()
         serializer = self.get_serializer(instance)
         data = serializer.data
-        return Response(data="retrieving an object")
+        return Response(data)
     
     def update(self, request, *args, **kwargs):
         return super().update(request, *args, **kwargs)
@@ -100,6 +100,14 @@ class ProjectNameListCreateAPIView(generics.ListCreateAPIView):
 class ProjectNameRetrieveUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     queryset = ProjectName.objects.all()
     serializer_class = SerializerProjectName
+    
+    # filtering
+    def get_queryset(self):
+        queryset = self.queryset
+        name_filter = self.request.query_params.get('name', None)
+        if name_filter is not None:
+            queryset = queryset.filter(name__icontains=name_filter)
+        return queryset
 
 # Customizing API views for Documents Serialization
 class DocumentsListCreateAPIView(generics.ListCreateAPIView):
@@ -110,6 +118,14 @@ class DocumentsListCreateAPIView(generics.ListCreateAPIView):
 class DocumentsRetrieveUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
     queryset = Documents.objects.all()
     serializer_class = SerializerDocuments
+
+    # filtering
+    def get_queryset(self):
+        queryset = self.queryset
+        name_filter = self.request.query_params.get('name', None)
+        if name_filter is not None:
+            queryset = queryset.filter(name__icontains=name_filter)
+        return queryset
 
 
 
