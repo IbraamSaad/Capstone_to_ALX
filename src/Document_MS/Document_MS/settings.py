@@ -123,12 +123,31 @@ STATIC_URL = 'static/'
 STATICSTATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'), # Where you put static files during development
 ]
-REST_FRAMEWORK = {  # Project permission level
-    'DEFAULT_PERMISSIONS_CLASSES': [
-        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
-        'rest_framework.permissions.IsAdminUSER', 
-        'rest_framework.permissions.AllowAny', 
-    ]
+
+REST_FRAMEWORK = { # handling error
+    'EXCEPTION_HANDLER': 'documents_api.exceptions.custom_exception_handler', 
+    
+}
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',  
+    },
+    'loggers': {
+        'documents_api': {  
+            'handlers': ['console'],
+            'level': 'ERROR', 
+            'propagate': False,
+        },
+    },
 }
 
 

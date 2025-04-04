@@ -1,11 +1,11 @@
 from django.shortcuts import render, redirect
-from . models import ProjectName, Documents, CustomUser
+from . models import ProjectName, Documents
 from django.contrib.auth.forms import UserCreationForm
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin # PermissionRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic import ListView
@@ -59,7 +59,7 @@ class ProjectNameCreateView(CreateView):
     fields = '__all__'  
     template_name = 'documents/create_project.html'
     success_url = reverse_lazy('project_create') 
-
+#  permissions for admin only to create projects
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_staff:
             raise PermissionDenied("Only admin users can create projects.")

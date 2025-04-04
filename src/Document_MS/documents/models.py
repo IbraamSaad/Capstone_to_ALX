@@ -29,7 +29,7 @@ class Documents(models.Model):
 	]
 
 
-	project = models.OneToOneField(ProjectName, on_delete=models.CASCADE)
+	project = models.ForeignKey(ProjectName, on_delete=models.CASCADE)
 	document_extension = models.FileField(upload_to='documents/')
 	documents_type = models.CharField(max_length=20, choices=d_type, verbose_name='d_type', default='UNKNOWN')
 	documents_metaData = models.CharField(max_length=50)
