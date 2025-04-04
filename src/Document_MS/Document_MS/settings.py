@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-h0atpu0b)@dn3ffwbhk5pv_2w5v!)7-dy)_q0wywd5^(a!%o%d'
+SECRET_KEY = 'django-insecure-h0atpeu0b)@dn3ffwbhik5pv_2w5v!)7-dy)_q0wbywd5^(a!%o%d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -123,6 +123,14 @@ STATIC_URL = 'static/'
 STATICSTATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'), # Where you put static files during development
 ]
+REST_FRAMEWORK = {  # Project permission level
+    'DEFAULT_PERMISSIONS_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.IsAdminUSER', 
+        'rest_framework.permissions.AllowAny', 
+    ]
+}
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
