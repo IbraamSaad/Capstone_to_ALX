@@ -45,12 +45,11 @@ class LogoutView(View):
     template_name = 'documents/logout.html'
 
     def get(self, request, *args, **kwargs):
-        logout(request)
-        return redirect('logout')  
+        return render(request, self.template_name)  
 
     def post(self, request, *args, **kwargs):
         logout(request)
-        return redirect('logout')
+        return redirect('home')
 
 
 # allow staff only ro create instances of Projects objects    
@@ -78,7 +77,7 @@ class ProjectListView(LoginRequiredMixin, ListView): # PermissionRequiredMixin
     
 # allow staff only ro create instances of Documets objects 
 class DocumetsCreateView(CreateView):
-    model = ProjectName
+    model = Documents
     fields = '__all__'  
     template_name = 'documents/create_documents.html'
     success_url = reverse_lazy('documents_create') 
