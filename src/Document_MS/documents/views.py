@@ -5,11 +5,10 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView
 from django.views import View
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.contrib.auth.forms import AuthenticationForm
 from django.views.generic import ListView
-from . serializers import  SerialzerCustomeUser, SerializerProjectName, SerializerDocuments
-from rest_framework.response import Response
-from rest_framework import generics
 
 def welcoming(request):
     return render(request, 'documents/welcome.html')
@@ -19,6 +18,8 @@ class SignupViews(CreateView):
     form_class = UserCreationForm
     success_url = reverse_lazy('login')
     template_name = 'documents/signup.html'
+
+    
 
 class LoginView(View):
     template_name = 'documents/login.html'
@@ -35,9 +36,9 @@ class LoginView(View):
             user = authenticate(request, username=username, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('login')  # Replace 'home' with your desired redirect URL
+                return redirect('login')  
             else:
-                form.add_error(None, 'Invalid username or password') # general error message
+                form.add_error(None, 'Invalid username or password') #  error message
         return render(request, self.template_name, {'form': form})
     
 class LogoutView(View):
@@ -45,14 +46,27 @@ class LogoutView(View):
 
     def get(self, request, *args, **kwargs):
         logout(request)
-        return redirect('logout')  # Replace 'home' with your desired redirect URL
+        return redirect('logout')  
 
     def post(self, request, *args, **kwargs):
         logout(request)
         return redirect('logout')
-    
 
-class ProjectListView(ListView):
+
+# allow staff only ro create instances of Projects objects    
+class ProjectNameCreateView(CreateView):
+    model = ProjectName
+    fields = '__all__'  
+    template_name = 'documents/create_project.html'
+    success_url = reverse_lazy('project_create') 
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise PermissionDenied("Only admin users can create projects.")
+        return super().dispatch(request, *args, **kwargs)
+
+# permission required for listing projects
+class ProjectListView(LoginRequiredMixin, ListView): # PermissionRequiredMixin
     model = ProjectName
     template_name = 'documents/list_project.html'
     context_object_name = 'projects'
@@ -62,70 +76,29 @@ class ProjectListView(ListView):
         queryset = queryset.filter()
         return queryset
     
-class DocumentsListView(ListView):
+# allow staff only ro create instances of Documets objects 
+class DocumetsCreateView(CreateView):
+    model = ProjectName
+    fields = '__all__'  
+    template_name = 'documents/create_documents.html'
+    success_url = reverse_lazy('documents_create') 
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_staff:
+            raise PermissionDenied("Only admin users can create documents.")
+        return super().dispatch(request, *args, **kwargs)
+
+# permission required for listing documents    
+class DocumentsListView(ListView, LoginRequiredMixin): # PermissionRequiredMixin
     model = Documents
     template_name = 'documents/list_documets.html'
     context_object_name = 'documents'
-
+    #  filter object
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter()
 
-# Customizing List and Create API views for CutomeUser Serialization
-class CustomeUserListCreateAPIView(generics.ListCreateAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = SerialzerCustomeUser
-# Customizing Retrieve, Update and Delete API views for CutomeUser Serialization
-class CustomeUserRetrieveUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
-    queryset = CustomUser.objects.all()
-    serializer_class = SerialzerCustomeUser
 
-    def retrieve(self, request, *args, **kwargs):
-        instance = self.get_object()
-        serializer = self.get_serializer(instance)
-        data = serializer.data
-        return Response(data)
-    
-    def update(self, request, *args, **kwargs):
-        return super().update(request, *args, **kwargs)
-    def delete(self, request, *args, **kwargs):
-        return super().delete(request, *args, **kwargs)
-
-# Customizing API views for ProjectName Serialization
-class ProjectNameListCreateAPIView(generics.ListCreateAPIView):
-    queryset = ProjectName.objects.all()
-    serializer_class = SerializerProjectName
-
-# Customizing Retrieve, Update and Delete API views for ProjectName Serialization
-class ProjectNameRetrieveUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
-    queryset = ProjectName.objects.all()
-    serializer_class = SerializerProjectName
-    
-    # filtering
-    def get_queryset(self):
-        queryset = self.queryset
-        name_filter = self.request.query_params.get('name', None)
-        if name_filter is not None:
-            queryset = queryset.filter(name__icontains=name_filter)
-        return queryset
-
-# Customizing API views for Documents Serialization
-class DocumentsListCreateAPIView(generics.ListCreateAPIView):
-    queryset = Documents.objects.all()
-    serializer_class = SerializerDocuments
-
-# Customizing Retrieve, Update and Delete API views for Documents Serialization
-class DocumentsRetrieveUpdateDelete(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Documents.objects.all()
-    serializer_class = SerializerDocuments
-
-    # filtering
-    def get_queryset(self):
-        queryset = self.queryset
-        name_filter = self.request.query_params.get('name', None)
-        if name_filter is not None:
-            queryset = queryset.filter(name__icontains=name_filter)
-        return queryset
 
 
 

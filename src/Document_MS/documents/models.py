@@ -12,7 +12,7 @@ class ProjectName(models.Model):
     Project_Description = models.TextField(blank=True, unique=False)
     project_code = models.IntegerField(blank=False, unique=True)
     starting_date = models.DateField(blank=False, unique=False)
-    dueDate = models.DurationField()
+    dueDate = models.DateField()
     def __str__(self):
         return self.project_name
 
