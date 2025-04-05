@@ -33,3 +33,4 @@ urlpatterns = [
     path('api/documents/', views.DocumentsListCreateAPIView.as_view(), name='document-list-create'),
     path('api/documents/<int:pk>/', views.DocumentsRetrieveUpdateDelete.as_view(), name='document-detail'),
 ]
+# 

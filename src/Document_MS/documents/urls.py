@@ -10,7 +10,7 @@ urlpatterns = [
     path('login/', LoginView.as_view(template_name='documents/login.html'), name='login'),
     path('logout/', LogoutView.as_view(template_name='documents/logout.html'), name='logout'),
     path('project_create/', ProjectNameCreateView.as_view(), name='project_create'),
-    path('projects_list/', ProjectListView.as_view(), name='projects_list'),
+    path('project_list/', ProjectListView.as_view(), name='project_list'),
     path('documents_create/', DocumetsCreateView.as_view(), name='documents_create'),
     path('documents_list/', DocumentsListView.as_view(), name='documents_list'),
     
