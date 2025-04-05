@@ -1,14 +1,51 @@
-<!-- welcome.html -->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% block title %}My Site{% endblock %}</title>
-</head>
-<body>
-    <!-- Content -->
-    <h1>Welcome to my Document Management System</h1>
-    <h2>This is my Capstpne Project Graduation</h2>
-    <h3>Project Name: Document Management System</h3>
-</body>
-</html>
+{% block title %}Document Management System{% endblock %}
+
+{% block content %}
+    <div class="home-container">
+        <h1>Welcome to the Document Management System</h1>
+
+        <p>This is my Capstone Graduation Project, designed to help you efficiently manage your documents.</p>
+
+        <div class="project-details">
+            <h2>Project Details</h2>
+            <p><strong>Project Name:</strong> Document Management System</p>
+            <p><strong>Description:</strong> A web-based application to store, organize, and access your important documents.</p>
+            <p><strong>Features:</strong></p>
+            <ul>
+                <li>Document Upload and Storage</li>
+                <li>Document Organization (Folders, Tags)</li>
+                <li>Document Search and Retrieval</li>
+                <li>User Authentication and Authorization</li>
+                <li>... (Add more features as needed) ...</li>
+            </ul>
+        </div>
+
+        <div class="get-started">
+            <h2>Get Started</h2>
+            <p>To begin using the Document Management System, please <a href="{% url 'login' %}">login</a> or <a href="{% url 'signup' %}">create an account</a>.</p>
+        </div>
+    </div>
+
+    <style>
+        
+        .home-container {
+            width: 80%;
+            margin: 20px auto;
+            text-align: center;
+        }
+
+        .project-details {
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .get-started {
+            margin-top: 30px;
+        }
+
+        ul {
+            list-style-type: disc;
+            margin-left: 20px;
+        }
+    </style>
+{% endblock %}
