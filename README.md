@@ -1,20 +1,34 @@
-<!-- project idea is based on my current job -->
-<!-- project name: Document managment systme -->
-<!-- key features -->
-1- createing and start my project
-2- start my "documents" app
-3- customizing models in documents app with suitable fields and attributes to be mapped in database
-  - CustomeUser, ProjectName and Documets
-4- adjust CustomUser in settings,py and appending rest_framework and documents app in INSTALLED APPs
-5- utilize Views cinfigurations to render my models in views.py
-6- handling django C.R.U.D operations
-  - using class based views and Function based views
-  - creating templates for login, logout and signup views
-  - creating templates for models 
-7- handling permissions operations 
-8- routing what i have rendered in views.py to urls.py
-  - adjusting the urls.py root project to make django identify what i want page or model to be rendered
-<!-- crearing documents_api app -->
-CRUD operations for API endpoints
-valdiations
-permissions
+# Document Management System
+
+A Django capstone project for organizing, managing, and archiving documents.
+
+## Features
+
+- Document, project, and custom-user data models
+- Create, read, update, and delete workflows through Django views
+- Authentication pages for sign-up, login, and logout
+- Role- and permission-aware access
+- Django REST Framework API endpoints
+- API validation and permissions
+
+## Technology
+
+- Python
+- Django
+- Django REST Framework
+- Database-backed Django models
+- HTML templates
+
+## Project structure
+
+- **src/** — application source code
+- **documents** app — document-management features and API work
+- **venv/** — local development environment files currently included in the repository
+
+## Purpose
+
+This project demonstrates practical backend development: designing data models, building web and API interfaces, applying permissions, and implementing full CRUD operations.
+
+## Local setup
+
+Clone the repository, create your own virtual environment, install the project dependencies, configure local Django settings and secret values, then run the database migrations and development server. Do not commit local secrets or environment-specific configuration.
